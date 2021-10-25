@@ -4,19 +4,22 @@ import java.util.*;
 
 public class SimpleArrayList<T> implements List<T> {
     private T[] container;
-
     private int size = 0;
-
     private int modCount = 0;
+    int point;
 
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
     }
 
+    private void incrSize() {
+        container = Arrays.copyOf(container, container.length * 2);
+    }
+
     @Override
     public void add(T value) {
         if (size == container.length) {
-            container = Arrays.copyOf(container, container.length * 2);
+            incrSize();
         }
         container[size++] = value;
         modCount++;
@@ -52,9 +55,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, size);
         return container[index];
     }
 
@@ -65,13 +66,12 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
+        point = 0;
         int expectedModCount = modCount;
-        final int[] index = {0};
-        return new Iterator<>() {
-
+        return new Iterator<T>() {
             @Override
             public boolean hasNext() {
-                return index[0] < size;
+                return point < size;
             }
 
             @Override
@@ -82,7 +82,7 @@ public class SimpleArrayList<T> implements List<T> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return container[index[0]++];
+                return container[point++];
             }
         };
     }
