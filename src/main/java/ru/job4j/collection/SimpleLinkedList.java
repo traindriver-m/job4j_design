@@ -1,6 +1,5 @@
-package ru.job4j.collection.list;
+package ru.job4j.collection;
 
-import org.w3c.dom.Node;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -17,24 +16,22 @@ public class SimpleLinkedList<E> implements List<E> {
     private static class Node<E> {
         E item;
         Node<E> next;
-        Node<E> prev;
 
-        public Node(Node<E> prev, E item, Node<E> next) {
+        public Node(E item, Node<E> next) {
             this.item = item;
             this.next = next;
-            this.prev = prev;
         }
     }
 
     @Override
     public void add(E value) {
-        final Node<E> l = last;
-        final Node<E> newNode = new Node<>(l, value, null);
+        final Node<E> tempLast = last;
+        final Node<E> newNode = new Node<>(value, null);
         last = newNode;
-        if (l == null) {
+        if (tempLast == null) {
             first = newNode;
         } else {
-            l.next = newNode;
+            tempLast.next = newNode;
         }
         size++;
         modCount++;
@@ -44,16 +41,9 @@ public class SimpleLinkedList<E> implements List<E> {
     public E get(int index) {
         Objects.checkIndex(index, size);
         Node<E> tempNode;
-        if (index <= size / 2) {
-            tempNode = first;
-            for (int i = 0; i < index; i++) {
-                tempNode = tempNode.next;
-            }
-        } else {
-            tempNode = last;
-            for (int i = size - 1; i > index; i--) {
-                tempNode = tempNode.prev;
-            }
+        tempNode = first;
+        for (int i = 0; i < index; i++) {
+            tempNode = tempNode.next;
         }
         return tempNode.item;
     }
@@ -65,6 +55,9 @@ public class SimpleLinkedList<E> implements List<E> {
         return new Iterator<E>() {
             @Override
             public boolean hasNext() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
                 return current != null;
             }
 
@@ -73,12 +66,9 @@ public class SimpleLinkedList<E> implements List<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
-                E rsl = current.item;
+                E result = current.item;
                 current = current.next;
-                return rsl;
+                return result;
             }
         };
     }
