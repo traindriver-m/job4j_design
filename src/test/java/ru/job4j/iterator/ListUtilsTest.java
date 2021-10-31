@@ -27,6 +27,13 @@ public class ListUtilsTest {
     }
 
     @Test
+    public void whenAddAfter() {
+        List<Integer> input = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4));
+        ListUtils.addAfter(input, 2, 10);
+        assertThat(input, is(Arrays.asList(0, 1, 2, 10, 3, 4)));
+    }
+
+    @Test
     public void whenAddAfterLast() {
         List<Integer> input = new ArrayList<>(Arrays.asList(0, 1, 2));
         ListUtils.addAfter(input, 2, 3);
