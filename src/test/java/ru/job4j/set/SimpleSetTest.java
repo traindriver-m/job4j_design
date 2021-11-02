@@ -24,23 +24,4 @@ public class SimpleSetTest {
         assertTrue(set.contains(null));
         assertFalse(set.add(null));
     }
-
-    @Test
-    public void whenAdd() {
-        Set<Integer> set = new SimpleSet<>();
-        assertTrue(set.add(1));
-        assertTrue(set.add(3));
-        assertTrue(set.add(null));
-        assertTrue( set.add(6));
-        assertTrue(set.add(12));
-        assertTrue(set.contains(null));
-        assertTrue(set.contains(6));
-        assertFalse(set.add(null));
-        System.out.println(set.iterator().next());
-        for (Integer integer : set) {
-            System.out.println(integer);
-        }
-
-    }
-
 }
