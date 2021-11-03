@@ -22,11 +22,9 @@ public class SimpleSet<T> implements Set<T> {
     public boolean contains(T value) {
         boolean rsl = false;
         for (T val : set) {
-            if (val == null  && value == null) {
+            if ((val == null  && value == null) || (val != null && val.equals(value))) {
                 rsl = true;
                 break;
-            } else if (val != null && val.equals(value)) {
-                rsl = true;
             }
         }
         return rsl;
