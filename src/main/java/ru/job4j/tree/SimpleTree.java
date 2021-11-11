@@ -14,7 +14,7 @@ public class SimpleTree<E> implements Tree<E> {
 
     @Override
     public boolean isBinary() {
-        return findByPredicate(s -> s.children.size() > 2).isEmpty() && root.children.size() <= 2;
+        return findByPredicate(s -> s.children.size() > 2).isEmpty();
     }
 
     private Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
