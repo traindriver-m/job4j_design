@@ -85,7 +85,7 @@ public class AnalizeTest {
         Set<User> current = Set.of(new User(1, "AA"), u2, new User(3, "D"), new User(4, "FF"), new User(5, "G"));
         assertThat(
                 Analize.diff(previous, current),
-                is(new Info(1, 3, 0 ))
+                is(new Info(1, 3, 0))
         );
     }
 
