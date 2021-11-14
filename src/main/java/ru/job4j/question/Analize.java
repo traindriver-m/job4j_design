@@ -1,6 +1,9 @@
 package ru.job4j.question;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Analize {
 
@@ -9,24 +12,19 @@ public class Analize {
         int changed = 0;
         int deleted = 0;
         if (!current.equals(previous)) {
-            for (User user2 :current) {
-                if (!previous.contains(user2)) {
-                    added++;
-                }
-            }
-            for (User user1 : previous) {
-                if (!current.contains(user1)) {
+            Map<Integer, String> map = current.stream()
+                    .collect(Collectors.toMap(User::getId, User::getName));
+            for (User u : previous) {
+                int id = u.getId();
+                String name = u.getName();
+                String retValue = map.putIfAbsent(id, name);
+                if (retValue == null) {
                     deleted++;
-                }
-                for (User user2 : current) {
-                    if (user1.getId() == user2.getId() && !user1.getName().equals(user2.getName())) {
-                        changed++;
-                        deleted--;
-                        added--;
-                        break;
-                    }
+                } else if (!retValue.equals(name)) {
+                    changed++;
                 }
             }
+            added = map.size() - previous.size();
         }
         return new Info(added, changed, deleted);
     }
