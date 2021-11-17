@@ -11,7 +11,7 @@ public class LogFilter {
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 String[] splitLine = line.split(" ");
-                if (splitLine[splitLine.length - 2].equals("404")) {
+                if ("404".equals(splitLine[splitLine.length - 2])) {
                     filterList.add(line);
                 }
             }
@@ -26,7 +26,9 @@ public class LogFilter {
                 new BufferedOutputStream(
                         new FileOutputStream(file)
                 ))) {
-            out.println(log);
+            for (String string : log) {
+                out.printf("%s%n", string);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
