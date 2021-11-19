@@ -30,6 +30,10 @@ public class Analizy {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        write(statusList, target);
+    }
+
+    public void write(ArrayList<String> statusList, String target) {
         try (PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
                         new FileOutputStream(target)
