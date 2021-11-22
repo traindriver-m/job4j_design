@@ -5,20 +5,19 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
-    List<FileProperty> filePropertyList = new LinkedList<>();
+    Map<FileProperty, Path> filePropertyMap = new HashMap<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty fileProperty = new FileProperty(file.toFile().length(), file.toFile().getName());
-        if (filePropertyList.contains(fileProperty)) {
-            System.out.println("This is duplicate: " + fileProperty.getName()
-                    + " (size: " + fileProperty.getSize() + ")");
+        if (filePropertyMap.containsKey(fileProperty)) {
+            System.out.println(filePropertyMap.get(fileProperty) + "\n" + file.toAbsolutePath());
         }
-        filePropertyList.add(fileProperty);
+        filePropertyMap.put(fileProperty, file.toAbsolutePath());
         return super.visitFile(file, attrs);
     }
 }
