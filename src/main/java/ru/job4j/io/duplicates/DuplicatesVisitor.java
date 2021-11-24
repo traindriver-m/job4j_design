@@ -10,8 +10,8 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
-    Map<FileProperty, HashSet<Path>> allFilePropertyMap = new HashMap<>();
-    Map<FileProperty, HashSet<Path>> resultMap = new HashMap<>();
+    private final Map<FileProperty, HashSet<Path>> allFilePropertyMap = new HashMap<>();
+    private final Map<FileProperty, HashSet<Path>> resultMap = new HashMap<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
@@ -27,5 +27,11 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
             allFilePropertyMap.put(fileProperty, pathSet);
         }
         return super.visitFile(file, attrs);
+    }
+
+    public void printResult() {
+        resultMap.entrySet().stream()
+                .flatMap(s -> s.getValue().stream())
+                .forEach(System.out::println);
     }
 }
