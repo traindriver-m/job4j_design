@@ -13,12 +13,12 @@ public class Zip {
     }
 
     public static void packSingleFile(List<Path> sources, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) { // в его конструктор передается потоk вывода
+        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             for (Path path : sources) {
-                ZipEntry zipEntry = new ZipEntry(path.toString()); // в конструктор передается имя архивируемого файла
-                zip.putNextEntry(zipEntry);  // добавляет каждый объект ZipEntry в архив
+                ZipEntry zipEntry = new ZipEntry(path.toString());
+                zip.putNextEntry(zipEntry);
                 try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(path.toString()))) {
-                    zip.write(out.readAllBytes());  // добавляем содержимое к архиву
+                    zip.write(out.readAllBytes());
                 }
             }
         } catch (Exception e) {
@@ -26,13 +26,7 @@ public class Zip {
         }
     }
 
-
     public static void main(String[] args) {
-//        packSingleFile(
-//                new File("./pom.xml"),
-//                new File("./pom.zip")
-//        );
-
         ArgsName argsName = new ArgsName();
         argsName.of(args);
     }
