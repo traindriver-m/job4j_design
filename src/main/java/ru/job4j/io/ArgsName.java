@@ -14,7 +14,7 @@ public class ArgsName {
         if (args.length > 0) {
             validation(args);
         } else {
-            throw new IllegalArgumentException("There are no parameters to run!");
+            throw new IllegalArgumentException("There are no parameters to run.");
         }
     }
 
@@ -27,7 +27,7 @@ public class ArgsName {
                 key = key.replace("-", "");
                 values.put(key, value);
             } else {
-                throw new IllegalArgumentException("Incorrect program launch parameters!");
+                throw new IllegalArgumentException("Incorrect program launch parameters.");
             }
         }
     }
