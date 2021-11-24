@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ArgsName {
-
     private final Map<String, String> values = new HashMap<>();
 
     public String get(String key) {
@@ -12,22 +11,24 @@ public class ArgsName {
     }
 
     private void parse(String[] args) {
-        String key;
-        String value;
-        String[] parameter;
         if (args.length > 0) {
-            for (String string : args) {
-                parameter = string.split("=");
-                if (parameter.length < 2) {
-                    throw new IllegalArgumentException();
-                }
-                key = parameter[0];
-                value = parameter[1];
+            validation(args);
+        } else {
+            throw new IllegalArgumentException("There are no parameters to run!");
+        }
+    }
+
+    private void validation(String[] args) {
+        for (String string : args) {
+            if (string.contains("=") && string.startsWith("-") && !string.endsWith("=") && string.charAt(1) != '=') {
+                String[] parameter = string.split("=");
+                String key = parameter[0];
+                String value = parameter[1];
                 key = key.replace("-", "");
                 values.put(key, value);
+            } else {
+                throw new IllegalArgumentException("Incorrect program launch parameters!");
             }
-        } else {
-            throw new IllegalArgumentException();
         }
     }
 
@@ -43,5 +44,8 @@ public class ArgsName {
 
         ArgsName zip = ArgsName.of(new String[]{"-out=project.zip", "-encoding=UTF-8"});
         System.out.println(zip.get("out"));
+
+        ArgsName error = ArgsName.of(new String[]{"-out=project.zip", "-encoding=UTF-8"});
+        System.out.println(error.get("out"));
     }
 }
