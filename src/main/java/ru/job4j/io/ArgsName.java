@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,10 +12,10 @@ public class ArgsName {
     }
 
     private void parse(String[] args) {
-        if (args.length > 0) {
+        if (args.length == 3) {
             validation(args);
         } else {
-            throw new IllegalArgumentException("There are no parameters to run.");
+            throw new IllegalArgumentException("Incorrect number of parameters to run.");
         }
     }
 
@@ -23,29 +24,34 @@ public class ArgsName {
             if (string.contains("=") && string.startsWith("-") && !string.endsWith("=") && string.charAt(1) != '=') {
                 String[] parameter = string.split("=");
                 String key = parameter[0];
+
                 String value = parameter[1];
                 key = key.replace("-", "");
-                values.put(key, value);
+                if (key.equals("d") || key.equals("e") || key.equals("o")) {
+                    values.put(key, value);
+                } else {
+                    throw new IllegalArgumentException("Incorrect program launch parameters.");
+                }
             } else {
                 throw new IllegalArgumentException("Incorrect program launch parameters.");
             }
         }
+        checkDirectory();
+        Search.filter(values);
     }
 
-    public static ArgsName of(String[] args) {
+    private void checkDirectory() {
+        File file = new File(values.get("d"));
+        if (!file.exists()) {
+            throw new IllegalArgumentException(String.format("Not exist %s", file.getAbsoluteFile()));
+        }
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException(String.format("Not directory %s", file.getAbsoluteFile()));
+        }
+    }
+
+    public void of(String[] args) {
         ArgsName names = new ArgsName();
         names.parse(args);
-        return names;
-    }
-
-    public static void main(String[] args) {
-        ArgsName jvm = ArgsName.of(new String[]{"-Xmx=512", "-encoding=UTF-8"});
-        System.out.println(jvm.get("Xmx"));
-
-        ArgsName zip = ArgsName.of(new String[]{"-out=project.zip", "-encoding=UTF-8"});
-        System.out.println(zip.get("out"));
-
-        ArgsName error = ArgsName.of(new String[]{"-out=project.zip", "-encoding=UTF-8"});
-        System.out.println(error.get("out"));
     }
 }
