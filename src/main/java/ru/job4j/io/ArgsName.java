@@ -12,11 +12,10 @@ public class ArgsName {
     }
 
     private void parse(String[] args) {
-        if (args.length == 3) {
-            validation(args);
-        } else {
+        if (args.length != 3) {
             throw new IllegalArgumentException("Incorrect number of parameters to run.");
         }
+        validation(args);
     }
 
     private void validation(String[] args) {
