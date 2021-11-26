@@ -23,10 +23,9 @@ public class ArgsName {
             if (string.contains("=") && string.startsWith("-") && !string.endsWith("=") && string.charAt(1) != '=') {
                 String[] parameter = string.split("=");
                 String key = parameter[0];
-
                 String value = parameter[1];
                 key = key.replace("-", "");
-                if (key.equals("d") || key.equals("e") || key.equals("o")) {
+                if ("d".equals(key) || "e".equals(key) || "o".equals(key)) {
                     values.put(key, value);
                 } else {
                     throw new IllegalArgumentException("Incorrect program launch parameters.");
