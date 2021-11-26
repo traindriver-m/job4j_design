@@ -38,7 +38,7 @@ public class Search {
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         check(args);
     }
 }
