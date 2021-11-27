@@ -20,7 +20,9 @@ public class ArgsName {
 
     private void validation(String[] args) {
         for (String string : args) {
-            if (string.contains("=") && string.startsWith("-") && !string.endsWith("=") && string.charAt(1) != '=') {
+            if (!string.contains("=") && !string.startsWith("-") && string.endsWith("=") && string.charAt(1) == '=') {
+                throw new IllegalArgumentException("Incorrect program launch parameters.");
+            }
                 String[] parameter = string.split("=");
                 String key = parameter[0];
                 String value = parameter[1];
@@ -30,9 +32,6 @@ public class ArgsName {
                 } else {
                     throw new IllegalArgumentException("Incorrect program launch parameters.");
                 }
-            } else {
-                throw new IllegalArgumentException("Incorrect program launch parameters.");
-            }
         }
         checkDirectory();
         Search.filter(values);
