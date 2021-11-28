@@ -27,6 +27,9 @@ public class ArgsName {
                 throw new IllegalArgumentException("Incorrect program launch parameters.");
             }
             String[] parameter = string.split("=");
+            if (parameter.length != 2) {
+                throw new IllegalArgumentException("Incorrect program startup parameters. Check the value.");
+            }
             String key = parameter[0];
             String value = parameter[1];
             key = key.replaceFirst("-", "");
