@@ -23,8 +23,7 @@ public class Zip {
     }
 
     public static void main(String[] args) {
-        ArgsName argsName = new ArgsName();
-        argsName.of(args);
-        Search.validationKeys(argsName.getValues());
+        ArgsName.of(args);
+        Search.validationKeys(ArgsName.getValues());
     }
 }

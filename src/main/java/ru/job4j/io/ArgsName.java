@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ArgsName {
-    private final Map<String, String> values = new HashMap<>();
+    private static final Map<String, String> VALUES = new HashMap<>();
 
     public String get(String key) {
-        return values.get(key);
+        return VALUES.get(key);
     }
 
-    public Map<String, String> getValues() {
-        return values;
+    public static Map<String, String> getValues() {
+        return VALUES;
     }
 
     private void parse(String[] args) {
@@ -21,7 +21,7 @@ public class ArgsName {
         validation(args);
     }
 
-    private Map<String, String> validation(String[] args) {
+    private static Map<String, String> validation(String[] args) {
         for (String string : args) {
             if (!string.contains("=") && !string.startsWith("-") && string.endsWith("=") && string.charAt(1) == '=') {
                 throw new IllegalArgumentException("Incorrect program launch parameters.");
@@ -30,12 +30,12 @@ public class ArgsName {
             String key = parameter[0];
             String value = parameter[1];
             key = key.replaceFirst("-", "");
-            values.put(key, value);
+            VALUES.put(key, value);
         }
-        return values;
+        return VALUES;
     }
 
-    public ArgsName of(String[] args) {
+    public static ArgsName of(String[] args) {
         ArgsName names = new ArgsName();
         names.parse(args);
         validation(args);
