@@ -10,11 +10,29 @@ import java.util.function.Predicate;
 
 public class Search {
 
+    public static void validationKeys(Map<String, String> values) {
+        if (values.size() != 3 || !values.containsKey("d") || !values.containsKey("e") || !values.containsKey("o")) {
+            throw new IllegalArgumentException("Incorrect program launch parameters.");
+        }
+        filter(values);
+    }
+
     public static void filter(Map<String, String> values) {
         Path start = Paths.get(values.get("d"));
         List<Path> paths = search(start, p -> !p.toFile().getName().endsWith(values.get("e")));
         File target = new File(values.get("o"));
+        checkDirectory(values);
         Zip.packFiles(paths, target);
+    }
+
+    private static void checkDirectory(Map<String, String> values) {
+        File file = new File(values.get("d"));
+        if (!file.exists()) {
+            throw new IllegalArgumentException(String.format("Not exist %s", file.getAbsoluteFile()));
+        }
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException(String.format("Not directory %s", file.getAbsoluteFile()));
+        }
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) {

@@ -9,10 +9,6 @@ import java.util.zip.ZipOutputStream;
 public class Zip {
 
     public static void packFiles(List<Path> sources, File target) {
-        packSingleFile(sources, target);
-    }
-
-    public static void packSingleFile(List<Path> sources, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             for (Path path : sources) {
                 ZipEntry zipEntry = new ZipEntry(path.toString());
@@ -29,5 +25,6 @@ public class Zip {
     public static void main(String[] args) {
         ArgsName argsName = new ArgsName();
         argsName.of(args);
+        Search.validationKeys(argsName.getValues());
     }
 }
