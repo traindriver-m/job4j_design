@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<locomotive electric="true" motors="8" model="VL10">
+    <crew quantity="2"/>
+    <equipments>
+        <equipment>fireExtinguisher</equipment>
+        <equipment>brakeShoe</equipment>
+    </equipments>
+</locomotive>
