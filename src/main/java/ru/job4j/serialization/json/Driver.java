@@ -9,6 +9,14 @@ public class Driver {
         this.category = category;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
     @Override
     public String toString() {
         return "Driver{"

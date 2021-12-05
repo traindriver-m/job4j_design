@@ -17,6 +17,26 @@ public class Bus {
         this.routes = routes;
     }
 
+    public String getModel() {
+        return model;
+    }
+
+    public int getRelease() {
+        return release;
+    }
+
+    public boolean isPetrol() {
+        return petrol;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public int[] getRoutes() {
+        return routes;
+    }
+
     @Override
     public String toString() {
         return "Bus{"
