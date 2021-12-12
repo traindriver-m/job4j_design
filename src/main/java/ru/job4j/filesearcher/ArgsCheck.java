@@ -23,7 +23,7 @@ public class ArgsCheck {
 
     private static Map<String, String> argsValidation(String[] args) {
         for (String string : args) {
-            if (!string.contains("=") && !string.startsWith("-") && string.endsWith("=") && string.charAt(1) == '=') {
+            if (!string.contains("=") || !string.startsWith("-") || string.endsWith("=") || string.charAt(1) == '=') {
                 throw new IllegalArgumentException("Incorrect program launch parameters" + System.lineSeparator()
                         + "Parameters for launching the program:\n"
                         + "-d= directory to start the search.\n"

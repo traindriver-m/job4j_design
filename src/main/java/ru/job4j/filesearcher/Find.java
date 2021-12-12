@@ -7,5 +7,6 @@ public class Find {
         ArgsCheck.of(args);
         Map<String, String> argsMap = ArgsCheck.getValues();
         Search.validationKeys(argsMap);
+        Search.filter(argsMap);
     }
 }

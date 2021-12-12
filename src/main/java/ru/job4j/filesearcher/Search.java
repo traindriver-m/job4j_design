@@ -15,6 +15,9 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class Search {
+    private static final String NAME = "name";
+    private static final String MASK = "mask";
+    private static final String REGEX = "regex";
 
     public static void validationKeys(Map<String, String> values) {
         if (values.size() != 4 || !values.containsKey("d") || !values.containsKey("n")
@@ -26,7 +29,6 @@ public class Search {
                     + "-t=search type(name/mask/regex).\n"
                     + "-o=the name of the file to record the result.");
         }
-        filter(values);
     }
 
     public static void filter(Map<String, String> values) {
@@ -35,15 +37,15 @@ public class Search {
         String typeSearch = values.get("t");
         String targetSearch = values.get("n");
         List<Path> paths = new ArrayList<>();
-        if ("name".equals(typeSearch)) {
+        if (NAME.equals(typeSearch)) {
             paths = search(start, p -> p.toFile().getName().equals(targetSearch));
-        } else if ("mask".equals(typeSearch)) {
+        } else if (MASK.equals(typeSearch)) {
             String maskRegex = targetSearch.replaceAll("\\*", ".*");
-            maskRegex = maskRegex.replaceAll("\\?", ".");
+            maskRegex = maskRegex.replaceAll("\\?", ".?");
             maskRegex = "^(" + maskRegex + ").*$";
             Pattern pattern = Pattern.compile(maskRegex);
             paths = search(start, p -> pattern.matcher(p.toFile().getName()).matches());
-        } else if ("regex".equals(typeSearch)) {
+        } else if (REGEX.equals(typeSearch)) {
             Pattern pattern = Pattern.compile(targetSearch);
             paths = search(start, p -> pattern.matcher(p.toFile().getName()).matches());
         }
@@ -68,14 +70,11 @@ public class Search {
     }
 
     private static void outputResult(List<Path> paths) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Path path : paths) {
-            stringBuilder.append(path);
-            stringBuilder.append(System.lineSeparator());
-        }
         try (PrintWriter printWriter = new PrintWriter(new FileWriter(ArgsCheck.getValues().get("o"),
                 Charset.forName("WINDOWS-1251"), true))) {
-            printWriter.println(stringBuilder);
+            for (Path path : paths) {
+                printWriter.println(path);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
