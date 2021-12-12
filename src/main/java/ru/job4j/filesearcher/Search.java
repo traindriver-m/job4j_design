@@ -44,10 +44,10 @@ public class Search {
             maskRegex = maskRegex.replaceAll("\\?", ".?");
             maskRegex = "^(" + maskRegex + ").*$";
             Pattern pattern = Pattern.compile(maskRegex);
-            paths = search(start, p -> pattern.matcher(p.toFile().getName()).matches());
+            paths = search(start, p -> pattern.matcher(p.toFile().getName()).find());
         } else if (REGEX.equals(typeSearch)) {
             Pattern pattern = Pattern.compile(targetSearch);
-            paths = search(start, p -> pattern.matcher(p.toFile().getName()).matches());
+            paths = search(start, p -> pattern.matcher(p.toFile().getName()).find());
         }
         outputResult(paths);
     }
