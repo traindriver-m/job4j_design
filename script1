@@ -1,4 +1,10 @@
+create table locomotives(
+id serial primary key,
+name varchar (255),
+	type text,
+	weight int
+);
 insert into locomotives(name, type, weight) values('ВЛ10','Электрический', 18400);
 update locomotives set weight = 18500;
 delete from locomotives;
-select * from locomotives;
+select * from locomotives
