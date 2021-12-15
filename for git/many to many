@@ -1,0 +1,15 @@
+create table stations(
+id serial primary key,
+name varchar(255)
+);
+
+create table trains(
+id serial primary key,
+number int
+);
+
+create table stations_trains(
+id serial primary key,
+station_id int references stations(id),
+train_id int references trains(id)
+);

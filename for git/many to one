@@ -1,0 +1,10 @@
+create table father(
+id serial primary key,
+name varchar(255)
+);
+
+create table children(
+id serial primary key,
+name varchar(255),
+father_id int references father(id)
+);

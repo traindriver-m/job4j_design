@@ -1,0 +1,16 @@
+create table phone(
+id serial primary key,
+number varchar(255)
+);
+
+create table human(
+id serial primary key,
+name varchar(255),
+surname varchar(255)
+);
+
+create table phones_humans(
+id serial primary key,
+phone_id int references phone(id) unique,
+human_id int references human(id) unique
+);
