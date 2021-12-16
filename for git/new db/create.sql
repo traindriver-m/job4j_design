@@ -39,7 +39,7 @@ create table item(
 );
 
 create table comments(
-	id serial prumary key,
+	id serial primary key,
 	content text,
 	item_id int references item(id)
 );
