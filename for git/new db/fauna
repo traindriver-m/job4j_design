@@ -1,0 +1,15 @@
+create table fauna (
+id serial primary key,
+	name text,
+	avg_age int,
+	discovery_date date
+);
+insert into fauna(name, avg_age, discovery_date) values('swordfish', 9000, date '1901-01-02');
+insert into fauna(name, avg_age, discovery_date) values('gastropod', 15000, date '1952-05-11');
+insert into fauna(name, avg_age, discovery_date) values('fisheceraptor', 20000, date '1812-03-08');
+insert into fauna(name, avg_age, discovery_date) values('nosopotamus', 30000, date '1960-04-02');
+insert into fauna(name, avg_age, discovery_date) values('mepomus', 12000, null);
+select * from fauna where name LIKE '%fish%';
+select * from fauna where avg_age > 10000 and avg_age < 21000;
+select * from fauna where discovery_date is null;
+select * from fauna where discovery_date < '1950.01.01';
