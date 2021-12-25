@@ -1,0 +1,37 @@
+create table insurance(
+id serial primary key,
+	seria text,
+	number int,
+	exp_date date
+);
+
+create table driver(
+id serial primary key,
+	name text,
+	surname text,
+	insurance_id int references insurance(id)
+);
+
+insert into insurance(seria, number, exp_date) values('AC', 12456, date '2022-12-20');
+insert into insurance(seria, number, exp_date) values('AC', 16544, date '2022-11-13');
+insert into insurance(seria, number, exp_date) values('AK', 16301, date '2022-08-11');
+insert into insurance(seria, number, exp_date) values('BC', 11294, date '2023-01-05');
+insert into driver(name, surname, insurance_id) values('Sergey', 'Petrov', 1);
+insert into driver(name, surname, insurance_id) values('Petr', 'Kabanov', 2);
+insert into driver(name, surname, insurance_id) values('Nikolay', 'Pogosyan', 3);
+insert into driver(name, surname, insurance_id) values('Givi', 'Sacivi', 4);
+
+select dd.name, dd.surname, ins.seria, ins.number, ins.exp_date
+from driver as dd
+join insurance as ins
+on dd.insurance_id = ins.id;
+
+select dd.name as имя, dd.surname as фамилия, ins.seria as серия, ins.number as номер, ins.exp_date as дата_окончания
+from driver as dd
+join insurance as ins
+on dd.insurance_id = ins.id;
+
+select dd.name as имя, dd.surname as фамилия, ins.seria as серия, ins.number as номер, ins.exp_date as дата_окончания
+from driver as dd
+join insurance as ins
+on dd.insurance_id = ins.id and dd.surname like 'P%';
