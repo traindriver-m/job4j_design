@@ -26,12 +26,14 @@ from driver as dd
 join insurance as ins
 on dd.insurance_id = ins.id;
 
-select dd.name as имя, dd.surname as фамилия, ins.seria as серия, ins.number as номер, ins.exp_date as дата_окончания
+select dd.name as имя, dd.surname as фамилия, ins.seria as серия,
+ins.number as номер, ins.exp_date as дата_окончания
 from driver as dd
 join insurance as ins
 on dd.insurance_id = ins.id;
 
-select dd.name as имя, dd.surname as фамилия, ins.seria as серия, ins.number as номер, ins.exp_date as дата_окончания
+select dd.name as имя, dd.surname as фамилия, ins.seria as серия,
+ins.number as номер, ins.exp_date as дата_окончания
 from driver as dd
 join insurance as ins
 on dd.insurance_id = ins.id and dd.surname like 'P%';
