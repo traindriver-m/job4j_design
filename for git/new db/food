@@ -39,7 +39,7 @@ select * from product where current_date > expired_date;
 select name, price from product 
 where price in (select max(price) from product);
 
-select type.name, sum(1) from product join type
+select type.name, count(*) from product join type
 on type_id = type.id
 group by type.name;
 
@@ -47,10 +47,10 @@ select type.name, product.name from product join type
 on type_id = type.id where type.name like '%СЫР%' or type.name like '%МОЛОКО%'
 group by type.name, product.name;
 
-select type.name, sum(1) from product join type
+select type.name, count(*) from product join type
 on type_id = type.id
 group by type.name
-having sum(1) < 10;
+having count(*) < 10;
 
 select  product.name, type.name from product join type
 on type_id = type.id
