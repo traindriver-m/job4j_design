@@ -1,0 +1,28 @@
+CREATE TABLE departments(
+ID serial PRIMARY KEY,
+name VARCHAR(255)
+);
+
+CREATE TABLE emploers(
+ID serial PRIMARY KEY,
+name VARCHAR(255)
+);
+
+INSERT INTO departments (name) VALUES('landscaping'),('repair'),('water supply'),
+('electrification'),('sewage system');
+INSERT INTO emploers (name) VALUES('gardener'),('builder'),('plumber');
+
+SELECT departments.name FROM departments LEFT JOIN emploers ON departments.id = emploers.id WHERE emploers.name IS NULL;
+SELECT departments.name, emploers.name AS работник  FROM emploers LEFT JOIN departments ON emploers.id = departments.id;
+SELECT departments.name,emploers.name AS работник  FROM departments RIGHT JOIN emploers ON emploers.id = departments.id;
+
+CREATE TABLE teens(
+ID serial PRIMARY KEY,
+name VARCHAR(255),
+gender VARCHAR(10)
+);
+
+INSERT INTO teens (name,gender) VALUES('Sveta', 'female'),('Andrey','male'),
+('Egor','male'),('Anfisa','female'),('Antuan','male'),('Efrosinya','female');
+
+SELECT teens1.name,teens2.name FROM teens teens1 CROSS JOIN teens teens2 WHERE teens1.gender != teens2.gender;
