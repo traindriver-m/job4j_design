@@ -1,16 +1,22 @@
-CREATE TABLE departments(
-ID serial PRIMARY KEY,
-name VARCHAR(255)
-);
-
 CREATE TABLE emploers(
 ID serial PRIMARY KEY,
 name VARCHAR(255)
 );
 
+CREATE TABLE departments(
+	ID serial PRIMARY KEY,
+	name VARCHAR(255),
+	emploers_id INT REFERENCES emploers(ID)
+);
+
 INSERT INTO departments (name) VALUES('landscaping'),('repair'),('water supply'),
 ('electrification'),('sewage system');
 INSERT INTO emploers (name) VALUES('gardener'),('builder'),('plumber');
+
+SELECT departments.name,emploers.name FROM departments LEFT JOIN emploers ON departments.id = emploers.id;
+SELECT departments.name,emploers.name FROM departments RIGHT JOIN emploers ON departments.id = emploers.id;
+SELECT departments.name,emploers.name FROM departments FULL JOIN emploers ON departments.id = emploers.id;
+SELECT departments.name,emploers.name FROM departments CROSS JOIN emploers;
 
 SELECT departments.name FROM departments LEFT JOIN emploers ON departments.id = emploers.id WHERE emploers.name IS NULL;
 SELECT departments.name, emploers.name AS работник  FROM emploers LEFT JOIN departments ON emploers.id = departments.id;
