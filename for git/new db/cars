@@ -1,0 +1,44 @@
+CREATE TABLE body(
+ID serial PRIMARY KEY,
+type VARCHAR(100),
+color VARCHAR(50)
+);
+
+CREATE TABLE engine(
+ID serial PRIMARY KEY,
+power INT,
+engine_capacity INT
+);
+
+CREATE TABLE transmission(
+ID serial PRIMARY KEY,
+type VARCHAR(50)
+);
+
+CREATE TABLE car(
+ID serial PRIMARY KEY,
+model VARCHAR(100),
+id_body INT REFERENCES body(ID),
+id_engine INT REFERENCES engine(ID),
+id_transmission INT REFERENCES transmission(ID)
+);
+
+INSERT INTO body(type,color) VALUES('sedan','red'),('sedan','black'),
+('crossover','white'),('crossover','green'),('pickup','grey'),('pickup','blue');
+
+INSERT INTO engine(power,engine_capacity) VALUES(175,2400),
+(190,3000),(90,1600),(300,6000);
+
+INSERT INTO transmission(type) VALUES('manual'),('automatic'),('variator');
+
+INSERT INTO car(model,id_body,id_engine,id_transmission) VALUES ('polo',1,2,1),('santa_fe',3,1,2),('LADA',2,3,1);
+
+SELECT model, body.type, body.color,engine.power,engine.engine_capacity,transmission.type 
+FROM car INNER JOIN body ON id_body = body.id
+INNER JOIN engine ON id_engine = engine.id
+INNER JOIN transmission ON id_transmission = transmission.id;
+
+SELECT body.type,body.color FROM body LEFT JOIN car ON id_body = body.id WHERE id_body IS NULL; 
+SELECT engine.power,engine.engine_capacity FROM engine LEFT JOIN car ON id_engine = engine.id WHERE id_engine IS NULL; 
+SELECT transmission.type FROM transmission LEFT JOIN car ON id_transmission = transmission.id
+WHERE id_transmission IS NULL;
