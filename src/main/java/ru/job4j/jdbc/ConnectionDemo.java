@@ -9,18 +9,16 @@ import java.sql.SQLException;
 
 public class ConnectionDemo {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
-        String url = separator()[0];
-        String login = separator()[1];
-        String password = separator()[2];
+        Config config = new Config("app.properties");
+        config.load();
+        Class.forName(config.value("hibernate.connection.driver_class"));
+        String url = config.value("hibernate.connection.url");
+        String login = config.value("hibernate.connection.username");
+        String password = config.value("hibernate.connection.password");
         try (Connection connection = DriverManager.getConnection(url, login, password)) {
             DatabaseMetaData metaData = connection.getMetaData();
             System.out.println(metaData.getUserName());
             System.out.println(metaData.getURL());
         }
-    }
-
-    static String[] separator() {
-        return new Config("app.properties").toString().split(System.lineSeparator());
     }
 }
