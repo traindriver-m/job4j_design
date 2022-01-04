@@ -11,10 +11,11 @@ public class TableEditor implements AutoCloseable {
 
     private Properties properties;
 
-    public TableEditor(Properties properties) throws ClassNotFoundException, SQLException {
+    public TableEditor(Properties properties) throws SQLException, ClassNotFoundException {
         this.properties = properties;
         initConnection();
     }
+
 
     private void initConnection() throws ClassNotFoundException, SQLException {
         Class.forName(properties.getProperty("hibernate.connection.driver_class"));
@@ -102,7 +103,5 @@ public class TableEditor implements AutoCloseable {
         tableEditor.dropColumn("one_tbl", "surname");
         System.out.println(getTableScheme(tableEditor.connection, "one_tbl"));
         tableEditor.dropTable("one_tbl");
-
-
     }
 }
