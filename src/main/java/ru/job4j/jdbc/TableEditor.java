@@ -1,6 +1,7 @@
 package ru.job4j.jdbc;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.Properties;
 import java.util.StringJoiner;
@@ -23,13 +24,15 @@ public class TableEditor implements AutoCloseable {
                 properties.getProperty("hibernate.connection.password"));
     }
 
-    private void request(String sql) throws Exception {
+    private void request(String sql) {
         try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public void createTable(String tableName) throws Exception {
+    public void createTable(String tableName) {
         String sql = String.format(
                 "create table if not exists %s (%s);", tableName,
                 "id serial primary key"
@@ -37,22 +40,22 @@ public class TableEditor implements AutoCloseable {
         request(sql);
     }
 
-    public void dropTable(String tableName) throws Exception {
+    public void dropTable(String tableName) {
         String sql = String.format("drop table %s", tableName);
         request(sql);
     }
 
-    public void addColumn(String tableName, String columnName, String type) throws Exception {
+    public void addColumn(String tableName, String columnName, String type) {
         String sql = String.format("alter table %s add %s %s", tableName, columnName, type);
         request(sql);
     }
 
-    public void dropColumn(String tableName, String columnName) throws Exception {
+    public void dropColumn(String tableName, String columnName) {
         String sql = String.format("alter table %s drop %s", tableName, columnName);
         request(sql);
     }
 
-    public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
+    public void renameColumn(String tableName, String columnName, String newColumnName) {
         String sql = String.format("alter table %s rename %s to %s", tableName, columnName, newColumnName);
         request(sql);
     }
