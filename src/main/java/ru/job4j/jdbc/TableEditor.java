@@ -1,7 +1,5 @@
 package ru.job4j.jdbc;
 
-import ru.job4j.io.Config;
-
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -33,29 +31,29 @@ public class TableEditor implements AutoCloseable {
 
     public void createTable(String tableName) throws Exception {
         String sql = String.format(
-                "create table if not exists " + tableName + "(%s);",
+                "create table if not exists %s (%s);", tableName,
                 "id serial primary key"
         );
         request(sql);
     }
 
     public void dropTable(String tableName) throws Exception {
-        String sql = "drop table " + tableName;
+        String sql = String.format("drop table %s", tableName);
         request(sql);
     }
 
     public void addColumn(String tableName, String columnName, String type) throws Exception {
-        String sql = "alter table " + tableName + " add " + columnName + " " + type;
+        String sql = String.format("alter table %s add %s %s", tableName, columnName, type);
         request(sql);
     }
 
     public void dropColumn(String tableName, String columnName) throws Exception {
-        String sql = "alter table " + tableName + " drop " + columnName;
+        String sql = String.format("alter table %s drop %s", tableName, columnName);
         request(sql);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
-        String sql = "alter table " + tableName + " rename " + columnName + " to " + newColumnName;
+        String sql = String.format("alter table %s rename %s to %s", tableName, columnName, newColumnName);
         request(sql);
     }
 
