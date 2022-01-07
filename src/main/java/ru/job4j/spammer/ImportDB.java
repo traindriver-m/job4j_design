@@ -24,12 +24,11 @@ public class ImportDB {
     public List<User> load() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(dump))) {
-            List<String> dumpLines = new ArrayList<>();
-            bufferedReader.lines().forEach(dumpLines::add);
-            for (String s : dumpLines) {
-                String[] userData = s.split(";");
-                users.add(new User(userData[0], userData[1]));
-            }
+            bufferedReader.lines().map(s -> s.split(";")).peek(s -> {
+                if (s.length != 2 || s[0].isEmpty() || s[1].isEmpty()) {
+                    throw new IllegalArgumentException("The file contains incorrect data");
+                }
+            }).forEach(s -> users.add(new User(s[0], s[1])));
         }
         return users;
     }
